@@ -24,6 +24,7 @@
             machine.PStorage.addproduct("Порошок \"Кокаинум\"", 300, 5);
             machine.PStorage.addproduct("Чипсы \"Эти самые\"", 30, 4);
             machine.PStorage.addproduct("Печенье \"ПЫЩЬ!\"", 45, 4);
+            request.getSession().setAttribute("count", machine.PStorage.products.capacity());
         %>
 
         <% if ((String) request.getSession().getAttribute("init") != "true") { %>
@@ -46,12 +47,12 @@
                                 </form>
                             </td></tr><tr><td>
                             <% String tray = (String) request.getSession().getAttribute("tray" + i); %>
-                            <% if (tray == null) {%>
+                            <% if (tray == "0" || tray == null) {%>
                                 <img id="<%="tray" + i%>" src="img/empty_output.png" width="50">
                                 <% } else {%>
                                 <form action="vendingServlet" method="post">
-                                    <input type="hidden" name="choice" value="<%="tray_full" + i%>">
-                                    <input type="image" src="img/filled_output.png" width="50" border="0" alt="<%="tray_full" + i%>"
+                                    <input type="hidden" name="choice" value="<%="trayfull" + i%>">
+                                    <input type="image" src="img/filled_output.png" width="50" border="0" alt="<%="tray_full" + i%>">
                                 </form>
                                 <% } %>
                             </td></tr></table></td>

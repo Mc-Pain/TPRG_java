@@ -29,6 +29,7 @@ public class vendingServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -74,11 +75,10 @@ public class vendingServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession httpSession = request.getSession();
-        PrintWriter out = response.getWriter();
 
         String vending = request.getParameter("choice");
         try {
-            if (vending.equals("init")) {
+            if (vending.equals("init")) {                
                 httpSession.setAttribute("init", "true");
 
                 httpSession.setAttribute("msg", "");
@@ -91,26 +91,26 @@ public class vendingServlet extends HttpServlet {
 
         try {
             for (int i = 0; i < 10; i++) {
-                if (vending.equals("item" + i)) {
-                    httpSession.setAttribute("msg", String.format("Куплен товар под номером %1$d", i));
-                    httpSession.setAttribute("tray" + i, "1");
+                if (vending.equals("trayfull" + i)) {
+                    httpSession.setAttribute("msg", String.format("Взят товар под номером %1$d", i));
+                    httpSession.setAttribute("tray" + i, "0");
+                    getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
             }
 
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (Exception e) {
             httpSession.setAttribute("error", e.getMessage());
         }
 
         try {
             for (int i = 0; i < 10; i++) {
-                if (vending.equals("tray_full" + i)) {
-                    httpSession.setAttribute("msg", String.format("Взят товар под номером %1$d", i));
-                    httpSession.setAttribute("tray" + i, null);
+                if (vending.equals("item" + i)) {
+                    httpSession.setAttribute("msg", String.format("Куплен товар под номером %1$d", i));
+                    httpSession.setAttribute("tray" + i, "1");
+                    getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
             }
 
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (Exception e) {
             httpSession.setAttribute("error", e.getMessage());
         }
