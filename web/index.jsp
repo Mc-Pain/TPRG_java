@@ -17,16 +17,6 @@
         <title>Торговый автомат</title>
     </head>
     <body>
-        <%
-            vending_machine machine = new vending_machine();
-            machine.PStorage.addproduct("Шоколадный батончик \"нену\"", 50, 6);
-            machine.PStorage.addproduct("Отрава для крыс \"ВАААААГХ\"", 150, 4);
-            machine.PStorage.addproduct("Порошок \"Кокаинум\"", 300, 5);
-            machine.PStorage.addproduct("Чипсы \"Эти самые\"", 30, 4);
-            machine.PStorage.addproduct("Печенье \"ПЫЩЬ!\"", 45, 4);
-            request.getSession().setAttribute("count", machine.PStorage.products.capacity());
-        %>
-
         <% if ((String) request.getSession().getAttribute("init") != "true") { %>
         <form action="vendingServlet" method="post">
             <input type="hidden" name="choice" value="init">

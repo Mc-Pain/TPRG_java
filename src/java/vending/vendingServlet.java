@@ -30,6 +30,8 @@ public class vendingServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
+    public vending_machine machine;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -78,7 +80,15 @@ public class vendingServlet extends HttpServlet {
 
         String vending = request.getParameter("choice");
         try {
-            if (vending.equals("init")) {                
+            if (vending.equals("init")) {
+                machine = new vending_machine();
+                machine.PStorage.addproduct("Шоколадный батончик \"нену\"", 50, 6);
+                machine.PStorage.addproduct("Отрава для крыс \"ВАААААГХ\"", 150, 4);
+                machine.PStorage.addproduct("Порошок \"Кокаинум\"", 300, 5);
+                machine.PStorage.addproduct("Чипсы \"Эти самые\"", 30, 4);
+                machine.PStorage.addproduct("Печенье \"ПЫЩЬ!\"", 45, 4);
+                
+                
                 httpSession.setAttribute("init", "true");
 
                 httpSession.setAttribute("msg", "");
@@ -90,7 +100,7 @@ public class vendingServlet extends HttpServlet {
         }
 
         try {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < machine.PStorage.products.capacity(); i++) {
                 if (vending.equals("trayfull" + i)) {
                     httpSession.setAttribute("msg", String.format("Взят товар под номером %1$d", i));
                     httpSession.setAttribute("tray" + i, "0");
@@ -103,7 +113,7 @@ public class vendingServlet extends HttpServlet {
         }
 
         try {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < machine.PStorage.products.capacity(); i++) {
                 if (vending.equals("item" + i)) {
                     httpSession.setAttribute("msg", String.format("Куплен товар под номером %1$d", i));
                     httpSession.setAttribute("tray" + i, "1");
