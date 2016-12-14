@@ -19,25 +19,44 @@
     <body>
         <%
             vending_machine machine = new vending_machine();
-            machine.PStorage.addproduct("Шоколадный батончик \"нену\"",50,6);
-            machine.PStorage.addproduct("Отрава для крыс \"ВАААААГХ\"",150,4);
-            machine.PStorage.addproduct("Кораллы \"У Клары\"",300,5);
-            machine.PStorage.addproduct("Чипсы \"Эти самые\"",30,4);
-            machine.PStorage.addproduct("Печенье \"ПЫЩЬ!\"",45,4);
+            machine.PStorage.addproduct("Шоколадный батончик \"нену\"", 50, 6);
+            machine.PStorage.addproduct("Отрава для крыс \"ВАААААГХ\"", 150, 4);
+            machine.PStorage.addproduct("Порошок \"Кокаинум\"", 300, 5);
+            machine.PStorage.addproduct("Чипсы \"Эти самые\"", 30, 4);
+            machine.PStorage.addproduct("Печенье \"ПЫЩЬ!\"", 45, 4);
         %>
+
+        <% if ((String) request.getSession().getAttribute("init") != "true") { %>
+        <form action="vendingServlet" method="post">
+            <input type="hidden" name="choice" value="init">
+            <input id="init" type="submit" value="Включить машину">
+        </form>
+        <% } else {%>
+        <%=(String) request.getSession().getAttribute("msg")%>
         <table id = "items">
             <tr>
-                <%
-                    for (product Product : machine.PStorage.products){
-                        out.print("<td><table><tr><td>");
-                        out.print(Product.genInfo());
-                        out.print("</td></tr><tr><td>");
-                        out.print("Кнопка");
-                        out.print("</td></tr><tr><td>");
-                        out.print("Лоток");
-                        out.print("</td></tr></table></td>");
-                    }
-                %>
+                <% int i = 0;
+                    for (product Product : machine.PStorage.products) {%>
+                <td><table><tr><td>
+                                <%=Product.genInfo()%>
+                            </td></tr><tr><td>
+                                <form action="vendingServlet" method="post">
+                                    <input type="hidden" name="choice" value="<%="item" + i%>">
+                                    <input id="<%="item" + i%>" type="submit" value="Купить">
+                                </form>
+                            </td></tr><tr><td>
+                            <% String tray = (String) request.getSession().getAttribute("tray" + i); %>
+                            <% if (tray == null) {%>
+                                <img id="<%="tray" + i%>" src="img/empty_output.png" width="50">
+                                <% } else {%>
+                                <form action="vendingServlet" method="post">
+                                    <input type="hidden" name="choice" value="<%="tray_full" + i%>">
+                                    <input type="image" src="img/filled_output.png" width="50" border="0" alt="<%="tray_full" + i%>"
+                                </form>
+                                <% } %>
+                            </td></tr></table></td>
+                            <% i++; %>
+                            <% } %>
             </tr>
         </table>
         <table id="info">
@@ -61,5 +80,7 @@
                 </td>
             </tr>
         </table>
+
+        <% }%>
     </body>
 </html>

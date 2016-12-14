@@ -1,6 +1,7 @@
 package vending;
 
 public class product {
+
     private String _name;
     private int _cost;
     private int _numLeft; //сколько осталось
@@ -36,8 +37,8 @@ public class product {
     public String getInfo() {
         return String.format("%1$s</br>Цена: %2$d</br>Осталось: %3$d шт.", _name, _cost, _numLeft);
     }
-    
-    public String genInfo(){
-        return String.format("%1$s, %2$d", _name, _cost);
+
+    public String genInfo() {
+        return String.format("%1$s<br/><b>%2$d</b>", _name, _cost);
     }
 }
