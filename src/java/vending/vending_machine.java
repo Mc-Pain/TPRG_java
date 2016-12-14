@@ -1,7 +1,6 @@
 package vending;
 
 public class vending_machine {
-
     private int tmpMoney; //деньги в автомате
     public product_storage PStorage; //хранилище продуктов
     public money_storage MStorage; //хранилище денег
@@ -41,15 +40,11 @@ public class vending_machine {
         //TODO: здесь будет фигня, которая выводит что-то на страницу
     }
 
-    public void getProductInfo(int productNumber) { //получение информации о продукте
-        outputMessage(PStorage.products.elementAt(productNumber).getInfo());
+    public String getProductInfo(int productNumber) { //получение информации о продукте
+        return PStorage.products.elementAt(productNumber).getInfo();
     }
 
-    public void buyProduct(int productNumber) {
-        try {
-            PStorage.decproduct(productNumber);
-        } catch (Error e) {
-            outputMessage(e.getMessage());
-        }
+    public int buyProduct(int productNumber) {
+        return PStorage.decproduct(productNumber);
     }
 }

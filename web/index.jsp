@@ -23,10 +23,9 @@
             <input id="init" type="submit" value="Включить машину">
         </form>
         <% } else {%>
-        <%=(String) request.getSession().getAttribute("msg")%>
         <table id = "items">
             <tr>
-                <% int i = 0;
+                <%-- <% int i = 0;
                     for (product Product : machine.PStorage.products) {%>
                 <td><table><tr><td>
                                 <%=Product.genInfo()%>
@@ -47,7 +46,8 @@
                                 <% } %>
                             </td></tr></table></td>
                             <% i++; %>
-                            <% } %>
+                            <% } %> --%>
+                <%=(String) request.getSession().getAttribute("output")%>
             </tr>
         </table>
         <table id="info">
@@ -56,7 +56,7 @@
                     Купюроприемник
                 </td>
                 <td>
-                    Дисплей
+                    <%=(String) request.getSession().getAttribute("msg")%>
                 </td>
                 <td>
                     Ключ управления

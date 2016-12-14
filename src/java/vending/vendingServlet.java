@@ -31,6 +31,7 @@ public class vendingServlet extends HttpServlet {
      */
     
     public vending_machine machine;
+    public HttpSession httpSession;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -76,34 +77,35 @@ public class vendingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession httpSession = request.getSession();
-
+        httpSession = request.getSession();
+        
         String vending = request.getParameter("choice");
         try {
             if (vending.equals("init")) {
                 machine = new vending_machine();
-                machine.PStorage.addproduct("Шоколадный батончик \"нену\"", 50, 6);
-                machine.PStorage.addproduct("Отрава для крыс \"ВАААААГХ\"", 150, 4);
-                machine.PStorage.addproduct("Порошок \"Кокаинум\"", 300, 5);
-                machine.PStorage.addproduct("Чипсы \"Эти самые\"", 30, 4);
-                machine.PStorage.addproduct("Печенье \"ПЫЩЬ!\"", 45, 4);
-                
+                machine.PStorage.addproduct("Шоколадный батончик &quot;нену&quot;", 50, 6);
+                machine.PStorage.addproduct("Отрава для крыс &quot;ВАААААГХ&quot;", 150, 4);
+                machine.PStorage.addproduct("Порошок &quot;Кокаинум&quot;", 300, 5);
+                machine.PStorage.addproduct("Чипсы &quot;Эти самые&quot;", 30, 4);
+                machine.PStorage.addproduct("Печенье &quot;ПЫЩЬ!&quot;", 45, 4);
                 
                 httpSession.setAttribute("init", "true");
 
                 httpSession.setAttribute("msg", "");
 
+                product_reload(request);
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
         } catch (Exception e) {
             httpSession.setAttribute("error", e.getMessage());
         }
 
-        try {
-            for (int i = 0; i < machine.PStorage.products.capacity(); i++) {
-                if (vending.equals("trayfull" + i)) {
-                    httpSession.setAttribute("msg", String.format("Взят товар под номером %1$d", i));
-                    httpSession.setAttribute("tray" + i, "0");
+        try { //забираем продукт
+            for (int item = 0; item < machine.PStorage.products.capacity(); item++) {
+                if (vending.equals("trayfull" + item)) {
+                    httpSession.setAttribute("msg", String.format("Взят товар под номером %1$d", item));
+                    httpSession.setAttribute("tray" + item, null);
+                    product_reload(request);
                     getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
             }
@@ -112,11 +114,13 @@ public class vendingServlet extends HttpServlet {
             httpSession.setAttribute("error", e.getMessage());
         }
 
-        try {
-            for (int i = 0; i < machine.PStorage.products.capacity(); i++) {
-                if (vending.equals("item" + i)) {
-                    httpSession.setAttribute("msg", String.format("Куплен товар под номером %1$d", i));
-                    httpSession.setAttribute("tray" + i, "1");
+        try { //покупаем продукт
+            for (int item = 0; item < machine.PStorage.products.capacity(); item++) {
+                if (vending.equals("item" + item)) {
+                    httpSession.setAttribute("tray" + item, "1");
+                    machine.buyProduct(item);
+                    httpSession.setAttribute("msg", String.format("Куплен товар под номером %1$d<br/>Осталось %2$s шт.", item, machine.PStorage.products.elementAt(item).getLeft()));
+                    product_reload(request);
                     getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
             }
@@ -124,6 +128,53 @@ public class vendingServlet extends HttpServlet {
         } catch (Exception e) {
             httpSession.setAttribute("error", e.getMessage());
         }
+        
+        try { //смотрим информацию о продукте
+            for (int item = 0; item < machine.PStorage.products.capacity(); item++) {
+                if (vending.equals("info" + item)) {
+                    httpSession.setAttribute("msg", machine.getProductInfo(item));
+                    product_reload(request);
+                    getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                }
+            }
+
+        } catch (Exception e) {
+            httpSession.setAttribute("error", e.getMessage());
+        }
+    }
+    
+    public void product_reload(HttpServletRequest request){
+        HttpSession httpSession = request.getSession();
+        
+        //перерисовка страницы
+        int i = 0;
+        String output = "";
+        for (product Product : machine.PStorage.products) {
+            output+="<td><table><tr><td>";
+            output+="<form action=\"vendingServlet\" method=\"post\">";
+            output+=String.format("<input type=\"hidden\" name=\"choice\" value=\"info%1$d\">", i);
+            output+=String.format("<input id=\"info%1$d\" type=\"submit\" value=\"", i);
+            output+=Product.getName();
+            output+="\"></form></td></tr><tr><td>";
+            output+="</td></tr><tr><td>";
+            String tray = (String) request.getSession().getAttribute("tray" + i);
+            output+="<form action=\"vendingServlet\" method=\"post\">";
+            output+=String.format("<input type=\"hidden\" name=\"choice\" value=\"item%1$d\">", i);
+            output+=String.format("<input id=\"item%1$d\" type=\"submit\" value=\"Купить\"", i);
+            if (tray != null || machine.PStorage.products.elementAt(i).getLeft().compareTo("0") == 0)
+                output += "disabled";
+            output+="></form></td></tr><tr><td>";
+            if (tray == null) {
+                output+=String.format("<img id=\"tray%1$d\" src=\"img/empty_output.png\" width=\"50\">", i);
+            } else {
+                output+="<form action=\"vendingServlet\" method=\"post\">";
+                output+=String.format("<input type=\"hidden\" name=\"choice\" value=\"trayfull%1$d\">", i);
+                output+=String.format("<input type=\"image\" src=\"img/filled_output.png\" width=\"50\" border=\"0\" alt=\"trayfull%1$d\"></form>", i);
+            }
+            output+="</td></tr></table></td>";
+            i++;
+        }
+        httpSession.setAttribute("output", output);
     }
 
     /**

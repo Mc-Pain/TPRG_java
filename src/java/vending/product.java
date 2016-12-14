@@ -1,7 +1,6 @@
 package vending;
 
 public class product {
-
     private String _name;
     private int _cost;
     private int _numLeft; //сколько осталось
@@ -27,9 +26,6 @@ public class product {
     public int decrement() { //продукт минус один
         if (_numLeft > 0) {
             _numLeft--;
-        } else {
-            Error e = new Error("Товар распродан!");
-            throw e;
         }
         return _numLeft;
     }
@@ -38,7 +34,15 @@ public class product {
         return String.format("%1$s</br>Цена: %2$d</br>Осталось: %3$d шт.", _name, _cost, _numLeft);
     }
 
-    public String genInfo() {
-        return String.format("%1$s<br/><b>%2$d</b>", _name, _cost);
+    public String getName() {
+        return String.format("%1$s", _name);
+    }
+    
+    public String getCost() {
+        return String.format("%1$s", _cost);
+    }
+    
+    public String getLeft() {
+        return String.format("%1$s", _numLeft);
     }
 }

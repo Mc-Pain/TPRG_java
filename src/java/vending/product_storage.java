@@ -15,8 +15,8 @@ public class product_storage {
         products.add(newproduct);
     }
 
-    public void decproduct(int productNumber) { //минус один продукт
-        products.elementAt(productNumber).decrement();
+    public int decproduct(int productNumber) { //минус один продукт
+        return products.elementAt(productNumber).decrement();
     }
 
     public product outputproductsum() { //вывод информации обо всех продуктах
