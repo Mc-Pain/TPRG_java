@@ -38,11 +38,11 @@ public class product {
         return String.format("%1$s", _name);
     }
     
-    public String getCost() {
-        return String.format("%1$s", _cost);
+    public int getCost() {
+        return _cost;
     }
     
-    public String getLeft() {
-        return String.format("%1$s", _numLeft);
+    public int getLeft() {
+        return _numLeft;
     }
 }

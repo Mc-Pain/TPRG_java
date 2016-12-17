@@ -80,7 +80,7 @@ public class vendingServlet extends HttpServlet {
         httpSession = request.getSession();
         
         String vending = request.getParameter("choice");
-        try {
+        try { //инициализация машины
             if (vending.equals("init")) {
                 machine = new vending_machine();
                 machine.PStorage.addproduct("Шоколадный батончик &quot;нену&quot;", 50, 6);
@@ -90,10 +90,11 @@ public class vendingServlet extends HttpServlet {
                 machine.PStorage.addproduct("Печенье &quot;ПЫЩЬ!&quot;", 45, 4);
                 
                 httpSession.setAttribute("init", "true");
-
                 httpSession.setAttribute("msg", "");
+                httpSession.setAttribute("balance", "0");
+                httpSession.setAttribute("delivery", "empty");
 
-                product_reload(request);
+                page_reload(request);
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
         } catch (Exception e) {
@@ -103,9 +104,10 @@ public class vendingServlet extends HttpServlet {
         try { //забираем продукт
             for (int item = 0; item < machine.PStorage.products.capacity(); item++) {
                 if (vending.equals("trayfull" + item)) {
-                    httpSession.setAttribute("msg", String.format("Взят товар под номером %1$d", item));
+                    machine.setMessage(String.format("Взят товар под номером %1$d", item));
+                    
                     httpSession.setAttribute("tray" + item, null);
-                    product_reload(request);
+                    page_reload(request);
                     getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
             }
@@ -117,10 +119,12 @@ public class vendingServlet extends HttpServlet {
         try { //покупаем продукт
             for (int item = 0; item < machine.PStorage.products.capacity(); item++) {
                 if (vending.equals("item" + item)) {
-                    httpSession.setAttribute("tray" + item, "1");
-                    machine.buyProduct(item);
-                    httpSession.setAttribute("msg", String.format("Куплен товар под номером %1$d<br/>Осталось %2$s шт.", item, machine.PStorage.products.elementAt(item).getLeft()));
-                    product_reload(request);
+                    if (machine.buyProduct(item)){
+                        httpSession.setAttribute("tray" + item, "1");
+                        httpSession.setAttribute("balance", machine.getBalance_str());
+                    }
+                    
+                    page_reload(request);
                     getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
             }
@@ -132,10 +136,52 @@ public class vendingServlet extends HttpServlet {
         try { //смотрим информацию о продукте
             for (int item = 0; item < machine.PStorage.products.capacity(); item++) {
                 if (vending.equals("info" + item)) {
-                    httpSession.setAttribute("msg", machine.getProductInfo(item));
-                    product_reload(request);
+                    machine.getProductInfo(item);
+                    
+                    page_reload(request);
                     getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
+            }
+
+        } catch (Exception e) {
+            httpSession.setAttribute("error", e.getMessage());
+        }
+        
+        try { //вносим деньги
+            if (vending.equals("money_input")) {
+                machine.inputMoney((String)request.getParameter("money_score"));
+                httpSession.setAttribute("balance", machine.getBalance_str());
+                
+                page_reload(request);
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            }
+
+        } catch (Exception e) {
+            httpSession.setAttribute("error", e.getMessage());
+        }
+        
+        try { //запрашиваем сдачу
+            if (vending.equals("delivery")) {
+                machine.outputMoney();
+                httpSession.setAttribute("balance", machine.getBalance_str());
+                httpSession.setAttribute("delivery", "not_empty");
+                
+                page_reload(request);
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            }
+
+        } catch (Exception e) {
+            httpSession.setAttribute("error", e.getMessage());
+        }
+        
+        try { //забираем сдачу
+            if (vending.equals("get_delivery")) {
+                machine.outputMoney();
+                httpSession.setAttribute("balance", machine.getBalance_str());
+                httpSession.setAttribute("delivery", "empty");
+                
+                page_reload(request);
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
@@ -146,7 +192,9 @@ public class vendingServlet extends HttpServlet {
     public void product_reload(HttpServletRequest request){
         HttpSession httpSession = request.getSession();
         
-        //перерисовка страницы
+        
+        httpSession.setAttribute("msg", machine.getMessage());
+        //перерисовка продуктов
         int i = 0;
         String output = "";
         for (product Product : machine.PStorage.products) {
@@ -161,7 +209,7 @@ public class vendingServlet extends HttpServlet {
             output+="<form action=\"vendingServlet\" method=\"post\">";
             output+=String.format("<input type=\"hidden\" name=\"choice\" value=\"item%1$d\">", i);
             output+=String.format("<input id=\"item%1$d\" type=\"submit\" value=\"Купить\"", i);
-            if (tray != null || machine.PStorage.products.elementAt(i).getLeft().compareTo("0") == 0)
+            if (tray != null || machine.PStorage.products.elementAt(i).getLeft() == 0)
                 output += "disabled";
             output+="></form></td></tr><tr><td>";
             if (tray == null) {
@@ -174,7 +222,38 @@ public class vendingServlet extends HttpServlet {
             output+="</td></tr></table></td>";
             i++;
         }
-        httpSession.setAttribute("output", output);
+        httpSession.setAttribute("output_prod", output);
+    }
+    
+    public void delivery_reload(HttpServletRequest request){
+        HttpSession httpSession = request.getSession();
+        String output = "";
+        
+        //перерисовка панели сдачи
+        String delivery = (String) request.getSession().getAttribute("delivery");
+        output += "<td><form action=\"vendingServlet\" method=\"post\">";
+        output += "<input type=\"hidden\" name=\"choice\" value=\"delivery\">";
+        output += "<input type=\"submit\" value=\"Забрать деньги\"";
+        if (!machine.deliveryTest()) {
+            output += "disabled";
+        }
+        output += "></form></td><td>";
+        if (delivery.equals("empty")) {
+            output += "<input type=\"image\" src=\"img/empty_output.png\" width=\"50\" border=\"0\" alt=\"get_delivery\">";
+        } else {
+        output += "<form action=\"vendingServlet\" method=\"post\">";
+        output += "<input type=\"hidden\" name=\"choice\" value=\"get_delivery\">";
+        output += "<input type=\"image\" src=\"img/filled_output.png\" width=\"50\" border=\"0\" alt=\"get_delivery\">";
+        output += "</form>";
+        }
+        output += "</td>";
+        
+        httpSession.setAttribute("output_del", output);
+    }
+    
+    public void page_reload(HttpServletRequest request){
+        product_reload(request);
+        delivery_reload(request);
     }
 
     /**

@@ -47,13 +47,18 @@
                             </td></tr></table></td>
                             <% i++; %>
                             <% } %> --%>
-                <%=(String) request.getSession().getAttribute("output")%>
+                <%=(String) request.getSession().getAttribute("output_prod")%>
             </tr>
         </table>
         <table id="info">
             <tr>
                 <td>
-                    Купюроприемник
+                    Баланс: <%=(String) request.getSession().getAttribute("balance")%> рублей
+                    <form action="vendingServlet" method="post">
+                        <input type="hidden" name="choice" value="money_input">
+                        <input name="money_score" type="text">
+                        <input type="submit" value="Внести деньги">
+                    </form>
                 </td>
                 <td>
                     <%=(String) request.getSession().getAttribute("msg")%>
@@ -63,12 +68,28 @@
                 </td>
             </tr>
             <tr>
+                <%-- <% String delivery = (String) request.getSession().getAttribute("delivery"); %>
                 <td>
-                    Кнопка "Сдача"
+                    <form action="vendingServlet" method="post">
+                        <input type="hidden" name="choice" value="delivery">
+                        <input type="submit" value="Забрать деньги"
+                        <% if (delivery == "empty") { %>
+                            disabled
+                        <% } %>
+                        >
+                    </form>
                 </td>
                 <td>
-                    Щель для сдачи
-                </td>
+                    <% if (delivery == "empty") { %>
+                    <input type="image" src="img/empty_output.png" width="50" border="0" alt="get_delivery">
+                    <% } else { %>
+                    <form action="vendingServlet" method="post">
+                        <input type="hidden" name="choice" value="get_delivery">
+                        <input type="image" src="img/filled_output.png" width="50" border="0" alt="get_delivery">
+                    </form>
+                    <% } %>
+                </td> --%>
+                <%=(String) request.getSession().getAttribute("output_del")%>
             </tr>
         </table>
 
