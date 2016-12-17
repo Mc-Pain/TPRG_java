@@ -176,7 +176,7 @@ public class vendingServlet extends HttpServlet {
         
         try { //забираем сдачу
             if (vending.equals("get_delivery")) {
-                machine.outputMoney();
+                machine.deliveryReset();
                 httpSession.setAttribute("balance", machine.getBalance_str());
                 httpSession.setAttribute("delivery", "empty");
                 
@@ -191,7 +191,6 @@ public class vendingServlet extends HttpServlet {
     
     public void product_reload(HttpServletRequest request){
         HttpSession httpSession = request.getSession();
-        
         
         httpSession.setAttribute("msg", machine.getMessage());
         //перерисовка продуктов

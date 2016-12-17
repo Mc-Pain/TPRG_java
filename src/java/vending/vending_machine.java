@@ -55,6 +55,11 @@ public class vending_machine {
         return (tmpMoney > 0);
     }
     
+    public void deliveryReset(){ //можно ли получить сдачу?
+        setMessage(String.format("Вы забрали: %1$d рублей", delivery));
+        delivery=0;
+    }
+    
     public String getBalance_str() { //получение баланса
         return String.format("%1$d", tmpMoney);
     }
