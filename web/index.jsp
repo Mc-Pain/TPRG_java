@@ -25,70 +25,22 @@
         <% } else {%>
         <table id = "items">
             <tr>
-                <%-- <% int i = 0;
-                    for (product Product : machine.PStorage.products) {%>
-                <td><table><tr><td>
-                                <%=Product.genInfo()%>
-                            </td></tr><tr><td>
-                                <form action="vendingServlet" method="post">
-                                    <input type="hidden" name="choice" value="<%="item" + i%>">
-                                    <input id="<%="item" + i%>" type="submit" value="Купить">
-                                </form>
-                            </td></tr><tr><td>
-                            <% String tray = (String) request.getSession().getAttribute("tray" + i); %>
-                            <% if (tray == "0" || tray == null) {%>
-                                <img id="<%="tray" + i%>" src="img/empty_output.png" width="50">
-                                <% } else {%>
-                                <form action="vendingServlet" method="post">
-                                    <input type="hidden" name="choice" value="<%="trayfull" + i%>">
-                                    <input type="image" src="img/filled_output.png" width="50" border="0" alt="<%="tray_full" + i%>">
-                                </form>
-                                <% } %>
-                            </td></tr></table></td>
-                            <% i++; %>
-                            <% } %> --%>
                 <%=(String) request.getSession().getAttribute("output_prod")%>
             </tr>
         </table>
         <table id="info">
             <tr>
                 <td>
-                    Баланс: <%=(String) request.getSession().getAttribute("balance")%> рублей
-                    <form action="vendingServlet" method="post">
-                        <input type="hidden" name="choice" value="money_input">
-                        <input name="money_score" type="text">
-                        <input type="submit" value="Внести деньги">
-                    </form>
+                    <%=(String) request.getSession().getAttribute("output_money")%>
                 </td>
                 <td>
                     <%=(String) request.getSession().getAttribute("msg")%>
                 </td>
                 <td>
-                    Ключ управления
+                    <%=(String) request.getSession().getAttribute("output_key")%>
                 </td>
             </tr>
             <tr>
-                <%-- <% String delivery = (String) request.getSession().getAttribute("delivery"); %>
-                <td>
-                    <form action="vendingServlet" method="post">
-                        <input type="hidden" name="choice" value="delivery">
-                        <input type="submit" value="Забрать деньги"
-                        <% if (delivery == "empty") { %>
-                            disabled
-                        <% } %>
-                        >
-                    </form>
-                </td>
-                <td>
-                    <% if (delivery == "empty") { %>
-                    <input type="image" src="img/empty_output.png" width="50" border="0" alt="get_delivery">
-                    <% } else { %>
-                    <form action="vendingServlet" method="post">
-                        <input type="hidden" name="choice" value="get_delivery">
-                        <input type="image" src="img/filled_output.png" width="50" border="0" alt="get_delivery">
-                    </form>
-                    <% } %>
-                </td> --%>
                 <%=(String) request.getSession().getAttribute("output_del")%>
             </tr>
         </table>

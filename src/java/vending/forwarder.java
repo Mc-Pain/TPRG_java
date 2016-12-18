@@ -5,22 +5,22 @@ import java.util.Vector;
 public class forwarder { //ненужный класс
 
     public Vector<product> _unnamed_product_ = new Vector<product>();
-    public money_storage _unnamed_money_storage_;
-    public product_storage _unnamed_product_storage_;
+    public moneyStorage _unnamed_money_storage_;
+    public productStorage _unnamed_product_storage_;
 
-    public void refillmoney(int aRefillmoney) {
+    public void refillMoney(int aRefillMoney) {
         throw new UnsupportedOperationException();
     }
 
-    public void refillproduct(product aRefillproduct) {
+    public void refillProduct(product aRefillproduct) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean getmoney(int aGetmoney) {
+    public boolean getMoney(int aGetmoney) {
         throw new UnsupportedOperationException();
     }
 
-    public void getproduct(product aGetproduct) {
+    public void getproduct(product aGetProduct) {
         throw new UnsupportedOperationException();
     }
 }

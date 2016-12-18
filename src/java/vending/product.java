@@ -1,6 +1,7 @@
 package vending;
 
 public class product {
+
     private String _name;
     private int _cost;
     private int _numLeft; //сколько осталось
@@ -17,10 +18,11 @@ public class product {
         }
     }
 
-    public void reload(int number) { //приспичило догрузить продукт
+    public int reload(int number) { //приспичило догрузить продукт
         if (number > 0) {
             _numLeft += number;
         }
+        return _numLeft;
     }
 
     public int decrement() { //продукт минус один
@@ -37,11 +39,11 @@ public class product {
     public String getName() {
         return String.format("%1$s", _name);
     }
-    
+
     public int getCost() {
         return _cost;
     }
-    
+
     public int getLeft() {
         return _numLeft;
     }

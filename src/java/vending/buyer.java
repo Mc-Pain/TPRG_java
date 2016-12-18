@@ -6,17 +6,17 @@ public class buyer { //ненужный класс
 
     private int _money;
     public Vector<product> _unnamed_product_ = new Vector<product>();
-    public vending_machine _unnamed_vending_machine_;
+    public vendingMachine _unnamed_vending_machine_;
 
-    public void setmoney(int aMoney) {
+    public void setMoney(int aMoney) {
         throw new UnsupportedOperationException();
     }
 
-    public void buyproduct() {
+    public void buyProduct() {
         throw new UnsupportedOperationException();
     }
 
-    public void paymoney(int aMoney) {
+    public void payMoney(int aMoney) {
         throw new UnsupportedOperationException();
     }
 }
