@@ -186,25 +186,23 @@ public class vendingServlet extends HttpServlet {
             httpSession.setAttribute("error", e.getMessage());
         }
 
-        try { //изменяем продукт
+        try { //добавляем продукт
             String key_pos = (String) request.getSession().getAttribute("key_pos");
-            for (int item = 0; item < machine.PStorage.products.capacity(); item++) {
-                if (vending.equals("change" + item) && key_pos.equals("enabled")) { //защита
-                    try {
-                        String name = (String) request.getParameter("newname" + item);
-                        int cost = Integer.parseInt((String) request.getParameter("newcost" + item));
-                        if (!name.equals("") && cost > 0) {
-                            machine.changeProduct(item, name, cost);
-                        } else {
-                            machine.setMessage("Неверные данные");
-                        }
-                    } catch (NumberFormatException e) {
-                        machine.setMessage("Неверная цена");
+            if (vending.equals("addprod") && key_pos.equals("enabled")) { //защита
+                try {
+                    String name = (String) request.getParameter("addname");
+                    int cost = Integer.parseInt((String) request.getParameter("addcost"));
+                    if (!name.equals("") && cost > 0) {
+                        machine.addProduct(name, cost);
+                    } else {
+                        machine.setMessage("Неверные данные");
                     }
-
-                    page_reload(request);
-                    getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                } catch (NumberFormatException e) {
+                    machine.setMessage("Неверная цена");
                 }
+
+                page_reload(request);
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
