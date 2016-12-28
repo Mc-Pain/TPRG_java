@@ -234,5 +234,18 @@ public class Test_product {
             System.out.println("catch error");
         }
         
+        test = new product(startname,startcost,-5);
+        System.out.println("test 4");
+        System.out.println("product num = -n");
+        try 
+        {
+            if(test.decrement()!=0)
+                System.out.println("error");
+            else System.out.println("success");
+        }
+        catch (Exception a)
+        {
+            System.out.println("catch error");
+        }
     }
 }
