@@ -1,258 +1,177 @@
 package vending;
 
-
-
-
+import org.junit.*;
+import static org.junit.Assert.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-import vending.*;
-
 /**
  *
  * @author vdid1
  */
 public class productTest {
+
     product test;// = new moneyStorage(10);
     int startcost = 10;
     String startname = "test";
     int startnum = 1;
-    public void changeCostTest()
-    {
-        int newcost;
-        System.out.println("changeCost test");
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 1");
-        System.out.println("new cost 20");
-        newcost = 20;
-        try 
-        {
-            test.changeCost(newcost);
-            if(test.getCost()!=newcost)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 2");
-        System.out.println("new cost 0");
-        newcost = 0;
-        try 
-        {
-            test.changeCost(newcost);
-            if(test.getCost()==newcost)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 3");
-        System.out.println("new cost -20");
-        newcost = -20;
-        try 
-        {
-            test.changeCost(newcost);
-            if(test.getCost()!=startcost)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 4");
-        System.out.println("new cost Integer.MAX_VALUE");
-        newcost = Integer.MAX_VALUE;
-        try 
-        {
-            test.changeCost(newcost);
-            if(test.getCost()!=newcost)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
 
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 5");
-        System.out.println("new cost Integer.MIN_VALUE");
-        newcost = Integer.MIN_VALUE;
-        try 
-        {
-            test.changeCost(newcost);
-            if(test.getCost()!=startcost)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }        
+    @BeforeClass
+    public static void setUpClass() throws Exception {
     }
-    
-    public void reloadTest()
-    {
-        int loadnum;
-        System.out.println("reload test");
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 1");
-        System.out.println("load 10");
-        loadnum = 10;
-        try 
-        {
-            test.reload(loadnum);
-            if(test.getLeft()!=startnum+loadnum)
-                System.out.println("error");
-            else System.out.println("success");
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    }
+
+    /**
+     * Test of changeCost method, of class product - positive test
+     */
+    @Test
+    public void testChangeCost_pos() {
+        System.out.println("changeCost - pos");
+        int newCost = 80;
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            instance.changeCost(newCost);
+            assertEquals(80, instance.getCost());
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
+    }
+
+    /**
+     * Test of changeCost method, of class product - negative test
+     */
+    @Test
+    public void testChangeCost_neg() {
+        System.out.println("changeCost - neg");
+        int newCost = -80;
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            instance.changeCost(newCost);
+            assertEquals(50, instance.getCost());
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 2");
-        System.out.println("load -10");
-        loadnum = -10;
-        try 
-        {
-            test.reload(loadnum);
-            if(test.getLeft()!=startnum)
-                System.out.println("error");
-            else System.out.println("success");
+    }
+
+    /**
+     * Test of changeCost method, of class product - null test
+     */
+    @Test
+    public void testChangeCost_nul() {
+        System.out.println("changeCost - nul");
+        int newCost = 0;
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            instance.changeCost(newCost);
+            assertEquals(50, instance.getCost());
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 3");
-        System.out.println("load 0");
-        loadnum = 0;
-        try 
-        {
-            test.reload(loadnum);
-            if(test.getLeft()!=startnum)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 4");
-        System.out.println("load Integer.MAX_VALUE");
-        loadnum = Integer.MAX_VALUE;
-        try 
-        {
-            test.reload(loadnum);
-            if(test.getLeft()<0)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,startnum);
-        System.out.println("test 5");
-        System.out.println("load Integer.MIN_VALUE");
-        loadnum = Integer.MIN_VALUE;
-        try 
-        {
-            test.reload(loadnum);
-            if(test.getLeft()!=startnum)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
+    }
+
+    /**
+     * Test of reload method, of class product - positive test
+     */
+    @Test
+    public void testReload_pos() {
+        System.out.println("reload - pos");
+        int amount = 4;
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            int expResult = amount + 5;
+            int result = instance.reload(amount);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
     }
     
-    public void decrementTest()
-    {
-        System.out.println("decrement test");
-        
-        test = new product(startname,startcost,1);
-        System.out.println("test 1");
-        System.out.println("product num = 1");
-        try 
-        {
-            if(test.decrement()!=0)
-                System.out.println("error");
-            else System.out.println("success");
+    /**
+     * Test of reload method, of class product - null test
+     */
+    @Test
+    public void testReload_nul() {
+        System.out.println("reload - pos");
+        int amount = 0;
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            int expResult = 5;
+            int result = instance.reload(amount);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
+    }
+    
+    /**
+     * Test of reload method, of class product - negative test
+     */
+    @Test
+    public void testReload_neg() {
+        System.out.println("reload - neg");
+        int amount = -2;
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            int expResult = 5;
+            int result = instance.reload(amount);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        
-        System.out.println("decrement test");
-        
-        test = new product(startname,startcost,0);
-        System.out.println("test 2");
-        System.out.println("product num = 0");
-        try 
-        {
-            if(test.decrement()!=0)
-                System.out.println("error");
-            else System.out.println("success");
+    }
+    
+    /**
+     * Test of reload method, of class product - overflow test
+     */
+    @Test
+    public void testReload_ovf() {
+        System.out.println("reload - ovf");
+        int amount = Integer.MAX_VALUE;
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            int expResult = 5;
+            int result = instance.reload(amount);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,Integer.MAX_VALUE);
-        System.out.println("test 3");
-        System.out.println("product num = Integer.MAX_VALUE");
-        try 
-        {
-            if(test.decrement()!=(Integer.MAX_VALUE-1))
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test = new product(startname,startcost,-5);
-        System.out.println("test 4");
-        System.out.println("product num = -n");
-        try 
-        {
-            if(test.decrement()!=0)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
+    }
+
+    /**
+     * Test of decrement method, of class product.
+     */
+    @Test
+    public void testDecrement() {
+        System.out.println("decrement");
+
+        try {
+            product instance = new product("пыщь!", 50, 5);
+            int expResult = 4;
+            int result = instance.decrement();
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
     }
 }

@@ -1,482 +1,205 @@
 package vending;
 
+import org.junit.*;
+import static org.junit.Assert.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 /**
  *
  * @author vdid1
  */
 public class productStorageTest {
+
     productStorage test;
-    int startcost = 10;
+    int startcost = 200;
     String startname = "test";
-    int startnum = 1;
-    public void addProductTest()
-    {
-        System.out.println("addProduct test");
+    int startnum = 4;
 
-        test.products.clear();
-        System.out.println("test 1");
-        System.out.println("test normal add product");
-        try 
-        {
-            test.addProduct(startname, startcost, startnum);
-            if(test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
 
-        test.products.clear();
-        System.out.println("test 2");
-        System.out.println("test with startnum = 0");
-        try 
-        {
-            test.addProduct(startname, startcost, 0);
-            if(test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
 
-        test.products.clear();
-        System.out.println("test 3");
-        System.out.println("test with startnum = -1");
-        try 
-        {
-            test.addProduct(startname, startcost, -1);
-            if(test.products.isEmpty()||test.products.elementAt(0).getLeft()!=0)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    @Before
+    public void setUp() throws Exception {
+    }
 
-        test.products.clear();
-        System.out.println("test 4");
-        System.out.println("test with startnum = Integer.MAX_VALUE");
-        try 
-        {
-            test.addProduct(startname, startcost, Integer.MAX_VALUE);
-            if(test.products.isEmpty()||test.products.elementAt(0).getLeft()!=Integer.MAX_VALUE)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    @After
+    public void tearDown() throws Exception {
+    }
 
-        test.products.clear();
-        System.out.println("test 4");
-        System.out.println("test with startnum = Integer.MIN_VALUE");
-        try 
-        {
-            test.addProduct(startname, startcost, Integer.MIN_VALUE);
-            if(test.products.isEmpty()||test.products.elementAt(0).getLeft()!=0)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    /**
+     * Test of addProduct method, of class productStorage.
+     */
+    @Test
+    public void testAddProduct_3args() {
+        System.out.println("addProduct - 3args");
+        String _name = "test";
+        int _cost = 50;
+        int _numLeft = 5;
 
-        System.out.println("addProduct test");
-//==============================================================================
-        test.products.clear();
-        System.out.println("test 6");
-        System.out.println("test with startcost = 0");
-        try 
-        {
-            test.addProduct(startname, 0, startnum);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(_name, _cost, _numLeft);
+            instance.addProduct(_name, _cost + 25, _numLeft);
+            product newproduct = instance.products.elementAt(1);
+            if (newproduct.getCost() != _cost+25){
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    }
 
-        test.products.clear();
-        System.out.println("test 7");
-        System.out.println("test with startcost = -1");
-        try 
-        {
-            test.addProduct(startname, -1, startnum);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    /**
+     * Test of addProduct method, of class productStorage.
+     */
+    @Test
+    public void testAddProduct_4args() {
+        System.out.println("addProduct - 4args");
+        String _name = "test2";
+        int _cost = 45;
+        int _numLeft = 7;
+        int place = 0;
 
-        test.products.clear();
-        System.out.println("test 8");
-        System.out.println("test with startcost = Integer.MAX_VALUE");
-        try 
-        {
-            test.addProduct(startname, Integer.MAX_VALUE, startnum);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getCost()!=Integer.MAX_VALUE)
-                System.out.println("error");
-            else System.out.println("success");
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(_name, _cost, _numLeft);
+            instance.addProduct(_name, _cost + 25, _numLeft, place);
+            product newproduct = instance.products.elementAt(0);
+            if (newproduct.getCost() != _cost+25){
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    }
 
-        test.products.clear();
-        System.out.println("test 9");
-        System.out.println("test with startcost = Integer.MIN_VALUE");
-        try 
-        {
-            test.addProduct(startname, Integer.MIN_VALUE, startnum);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-//==============================================================================
-        test.products.clear();
-        System.out.println("test 9");
-        System.out.println("test with startname = ");
-        try 
-        {
-            test.addProduct("", startcost, startnum);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 10");
-        System.out.println("addprod up to another");
-        try 
-        {
-            test.addProduct("test2", 20, 20, 1);
-            if(!startname.equals(test.products.elementAt(0).getName())
-               ||!"test2".equals(test.products.elementAt(1).getName()))
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
+    /**
+     * Test of changeProduct method, of class productStorage.
+     */
+    @Test
+    public void testChangeProduct() {
+        System.out.println("changeProduct");
+        int productNumber = 0;
+        String _name = "prod";
+        int _cost = 30;
 
-        test.products.clear();
-        System.out.println("test 11");
-        System.out.println("addprod to -1 pos");
-        try 
-        {
-            test.addProduct(startname, startcost, startnum, -1);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(startname, startcost, startnum);
+            instance.changeProduct(productNumber, _name, _cost);
+            product newproduct = instance.products.elementAt(0);
+            if (!newproduct.getName().equals(_name) || newproduct.getCost() != _cost){
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
+    }
+
+    /**
+     * Test of loadProduct method, of class productStorage - postive test
+     */
+    @Test
+    public void testLoadProduct_pos() {
+        System.out.println("loadProduct - pos test");
+        int productNumber = 0;
+        int start = 4;
+        int amount = 2;
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(startname, startcost, start);
+            int expResult = amount + startnum;
+            int result = instance.loadProduct(productNumber, amount);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of loadProduct method, of class productStorage - null test
+     */
+    @Test
+    public void testLoadProduct_nul() {
+        System.out.println("loadProduct - nul test");
+        int productNumber = 0;
+        int start = 4;
+        int amount = 0;
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(startname, startcost, start);
+            int expResult = startnum;
+            int result = instance.loadProduct(productNumber, amount);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of loadProduct method, of class productStorage - negative test
+     */
+    @Test
+    public void testLoadProduct_neg() {
+        System.out.println("loadProduct - neg test");
+        int productNumber = 0;
+        int start = 4;
+        int amount = -5;
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(startname, startcost, start);
+            int expResult = startnum;
+            int result = instance.loadProduct(productNumber, amount);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of decProduct method, of class productStorage - positve test
+     */
+    @Test
+    public void testDecProduct_pos() {
+        System.out.println("decProduct");
+        int productNumber = 0;
+        int num = 2;
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(startname, startcost, num);
+            int expResult = num - 1;
+            int result = instance.decProduct(productNumber);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
     }
     
-    public void delProductTest()
-    {
-        System.out.println("decProduct test");
-
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 1");
-        System.out.println("test normal del product");
-        try 
-        {
-            test.decProduct(0);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        System.out.println("test 2");
-        System.out.println("test del not exist product");
-        try 
-        {
-            test.delProduct(0);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-    }
-    
-    public void changeProductTest()
-    {
-        System.out.println("changeProduct test");
-
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 1");
-        System.out.println("test normal add product");
-        try 
-        {
-            test.changeProduct(0, "test2", startnum);
-            if(test.products.isEmpty()||
-              !test.products.elementAt(0).getName().equals("test2"))
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        System.out.println("test 2");
-        System.out.println("test change prod at empty vector");
-        try 
-        {
-            test.changeProduct(0, "test2", startnum);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-    }
-
-    public void loadProductTest()
-    {
-        System.out.println("loadProduct test");
-        int loaded;
-
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 1");
-        System.out.println("test normal load product");
-        loaded = 1;
-        try 
-        {
-            test.loadProduct(0, loaded);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!= startnum+loaded)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 2");
-        System.out.println("test load 0");
-        loaded = 0;
-        try 
-        {
-            test.loadProduct(0, loaded);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!= startnum+loaded)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 3");
-        System.out.println("test load -1");
-        loaded = -1;
-        try 
-        {
-            test.loadProduct(0, loaded);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!= startnum)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 4");
-        System.out.println("test load Integer.MAX_VALUE");
-        loaded = Integer.MAX_VALUE;
-        try 
-        {
-            test.loadProduct(0, loaded);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!= startnum+loaded ||
-               test.products.elementAt(0).getLeft()<0)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 5");
-        System.out.println("test load Integer.MIN_VALUE");
-        loaded = Integer.MIN_VALUE;
-        try 
-        {
-            test.loadProduct(0, loaded);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!= startnum)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-//==============================================================================
-        test.products.clear();
-        System.out.println("test 6");
-        System.out.println("test normal load not exist product");
-        loaded = 1;
-        try 
-        {
-            test.loadProduct(0, loaded);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-    }
-    
-    public void decProductTest()
-    {
-        System.out.println("decProduct test");
-        
-        test.products.clear();
-        test.addProduct(startname, startcost, startnum);
-        System.out.println("test 1");
-        System.out.println("test normal dec product");
-        try 
-        {
-            test.decProduct(0);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!=0)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test.products.clear();
-        System.out.println("test 2");
-        System.out.println("test dec not exist product");
-        try 
-        {
-            test.decProduct(0);
-            if(!test.products.isEmpty())
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        test.addProduct(startname, startcost, 0);
-        System.out.println("test 3");
-        System.out.println("test dec product num = 0");
-        try 
-        {
-            test.decProduct(0);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!=0)
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-
-        test.products.clear();
-        test.addProduct(startname, startcost, Integer.MAX_VALUE);
-        System.out.println("test 4");
-        System.out.println("test dec product num = Integer.MAX_VALUE");
-        try 
-        {
-            test.decProduct(0);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!=(Integer.MAX_VALUE-1))
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
-        }
-        
-        test.products.clear();
-        test.addProduct(startname, startcost, -5);
-        System.out.println("test 5");
-        System.out.println("test dec product num = -n");
-        try 
-        {
-            test.decProduct(0);
-            if(test.products.isEmpty()||
-               test.products.elementAt(0).getLeft()!=0  )
-                System.out.println("error");
-            else System.out.println("success");
-        }
-        catch (Exception a)
-        {
-            System.out.println("catch error");
+    /**
+     * Test of decProduct method, of class productStorage - null test
+     */
+    @Test
+    public void testDecProduct_nul() {
+        System.out.println("decProduct");
+        int productNumber = 0;
+        int num = 0;
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(startname, startcost, num);
+            int expResult = 0;
+            int result = instance.decProduct(productNumber);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
         }
     }
 }
