@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 /**
  *
- * @author vdid1
+ * @author McPain
  */
 public class moneyStorageTest {
 

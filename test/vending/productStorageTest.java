@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 /**
  *
- * @author vdid1
+ * @author McPain
  */
 public class productStorageTest {
 
@@ -33,6 +33,24 @@ public class productStorageTest {
 
     @After
     public void tearDown() throws Exception {
+    }
+
+    /**
+     * Test of delProduct method, of class productStorage
+     */
+    @Test
+    public void testDelProduct() {
+        System.out.println("delProduct - delete test");
+        try {
+            productStorage instance = new productStorage();
+            instance.addProduct(startname, startcost, startnum);
+            instance.delProduct(0);
+            if (!(instance.products.elementAt(0) == null)){
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
@@ -170,7 +188,7 @@ public class productStorageTest {
      */
     @Test
     public void testDecProduct_pos() {
-        System.out.println("decProduct");
+        System.out.println("decProduct - pos");
         int productNumber = 0;
         int num = 2;
         try {
@@ -189,7 +207,7 @@ public class productStorageTest {
      */
     @Test
     public void testDecProduct_nul() {
-        System.out.println("decProduct");
+        System.out.println("decProduct - nul");
         int productNumber = 0;
         int num = 0;
         try {

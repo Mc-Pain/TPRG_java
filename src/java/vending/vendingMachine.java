@@ -21,7 +21,7 @@ public class vendingMachine {
             this.inputMoney(money);
         } catch (NumberFormatException e) { // на случай апокалипсиса
             this.inputMoney(0);
-            setMessage("Здесь должна ыть шутка про тестировщика в баре");
+            setMessage("Здесь должна быть шутка про тестировщика в баре");
         }
     }
 
