@@ -4,7 +4,7 @@ public class moneyStorage {
 
     private int _money;
 
-    moneyStorage(int money) {
+    public moneyStorage(int money) {
         if (money >= 0) {
             this._money = money;
         } else {

@@ -1,18 +1,24 @@
+package vending;
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vending;
+
+import vending.*;
+
 
 /**
  *
  * @author vdid1
  */
-public class Test_moneyStorage {
+public class moneyStorageTest {
     moneyStorage test;// = new moneyStorage(10);
     int startmoney = 10;
-    public void test_addMoney()
+    public void addMoneyTest()
     {
         int addmoney;
         System.out.println("addMoney test");
@@ -98,7 +104,7 @@ public class Test_moneyStorage {
         }
     }
    
-    public void test_outputMoney()
+    public void outputMoneyTest()
     {
         int outmoney;
         System.out.println("outputMoney test");
