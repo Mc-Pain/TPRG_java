@@ -26,10 +26,18 @@ public class vendingMachine {
     }
 
     public void inputMoney(int aMoney) { //пользователь вводит деньги в автомат
-        if (aMoney > 0 && Integer.MAX_VALUE - aMoney > tmpMoney) {
-            tmpMoney += aMoney;
-            MStorage.addMoney(aMoney);
-            setMessage(String.format("Вы внесли %1$d рублей.", aMoney));
+        if (aMoney > 0) {
+            if (Integer.MAX_VALUE - aMoney > tmpMoney) {
+                if (Integer.MAX_VALUE - aMoney > MStorage.outputMoneySum()) {
+                    tmpMoney += aMoney;
+                    MStorage.addMoney(aMoney);
+                    setMessage(String.format("Вы внесли %1$d рублей.", aMoney));
+                } else {
+                    setMessage("Переполнение хранилища");
+                }
+            } else {
+                setMessage("Переполнение введенных денег");
+            }
         } else if (aMoney == 0) {
             setMessage("Вы внесли НИЧЕГО. Поздравляем!");
         } else {
@@ -54,7 +62,7 @@ public class vendingMachine {
     }
 
     public boolean deliveryTest() { //можно ли получить сдачу?
-        if (getStorageAmount() > 1000) {
+        if (getStorageAmount() > 1000 && getStorageAmount() > tmpMoney) {
             return (tmpMoney > 0);
         } else {
             return false;
@@ -110,13 +118,19 @@ public class vendingMachine {
             this.setMessage(String.format("Продукт %1$s удален", productNumber));
             return true;
         } else {
+            this.setMessage("Не удалось удалить продукт");
             return false;
         }
     }
 
     public boolean changeProduct(int productNumber, String _name, int _cost) {
-        this.setMessage("Продукт заменён");
-        return PStorage.changeProduct(productNumber, _name, _cost);
+        if (PStorage.changeProduct(productNumber, _name, _cost)) {
+            this.setMessage("Продукт заменён");
+            return true;
+        } else {
+            this.setMessage("Не удалось заменить продукт");
+            return false;
+        }
     }
 
     public boolean addProduct(String _name, int _cost) { //добавить продукт
@@ -125,6 +139,7 @@ public class vendingMachine {
             PStorage.addProduct(_name, _cost, 0);
             return true;
         } else {
+            this.setMessage("Неверные данные");
             return false;
         }
     }
@@ -134,6 +149,7 @@ public class vendingMachine {
             this.setMessage(String.format("Продукт %1$d загружен<br>Количество: %2$d шт.", productNumber, PStorage.products.elementAt(productNumber).getLeft()));
             return true;
         } else {
+            this.setMessage(String.format("Продукт не загружен"));
             return false;
         }
     }
@@ -153,9 +169,14 @@ public class vendingMachine {
     }
 
     public void inputStorage(int aMoney) { //оператор загружает деньги в хранилище
-        if (aMoney > 0 && Integer.MAX_VALUE - aMoney > tmpMoney) {
-            MStorage.addMoney(aMoney);
-            setMessage(String.format("Вы загрузили %1$d рублей.", aMoney));
+        if (aMoney > 0) {
+
+            if (Integer.MAX_VALUE - aMoney > MStorage.outputMoneySum()) {
+                MStorage.addMoney(aMoney);
+                setMessage(String.format("Вы загрузили %1$d рублей.", aMoney));
+            } else {
+                setMessage("Хранилище переполнено");
+            }
         } else if (aMoney == 0) {
             setMessage("Вы загрузили НИЧЕГО. Поздравляем!");
         } else {
