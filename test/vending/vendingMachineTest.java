@@ -34,178 +34,513 @@ public class vendingMachineTest {
     }
 
     /**
-     * Test of inputMoney method, of class vendingMachine.
+     * Test of inputMoney method, of class vendingMachine - positive test
      */
     @Test
-    public void testInputMoney_String() {
-        System.out.println("inputMoney");
-        String aMoney = "";
-        vendingMachine instance = new vendingMachine();
-        instance.inputMoney(aMoney);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInputMoney_pos() {
+        System.out.println("inputMoney - pos");
+        int aMoney = 500;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(aMoney);
+            assertEquals(10500, instance.getStorageAmount());
+
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of inputMoney method, of class vendingMachine.
+     * Test of inputMoney method, of class vendingMachine - null test
      */
     @Test
-    public void testInputMoney_int() {
-        System.out.println("inputMoney");
+    public void testInputMoney_nul() {
+        System.out.println("inputMoney - nul");
         int aMoney = 0;
-        vendingMachine instance = new vendingMachine();
-        instance.inputMoney(aMoney);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(aMoney);
+            assertEquals(10000, instance.getStorageAmount());
+
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of outputMoney method, of class vendingMachine.
+     * Test of inputMoney method, of class vendingMachine - negatve test
      */
     @Test
-    public void testOutputMoney() {
-        System.out.println("outputMoney");
-        vendingMachine instance = new vendingMachine();
-        instance.outputMoney();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInputMoney_neg() {
+        System.out.println("inputMoney - neg");
+        int aMoney = -500;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(aMoney);
+            assertEquals(10000, instance.getStorageAmount());
+
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of deliveryTest method, of class vendingMachine.
+     * Test of inputMoney method, of class vendingMachine - overflow test
      */
     @Test
-    public void testDeliveryTest() {
-        System.out.println("deliveryTest");
-        vendingMachine instance = new vendingMachine();
-        boolean expResult = false;
-        boolean result = instance.deliveryTest();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInputMoney_ovf() {
+        System.out.println("inputMoney - ovf");
+        int aMoney = Integer.MAX_VALUE;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(aMoney);
+            assertEquals(10000, instance.getStorageAmount());
+
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of deliveryReset method, of class vendingMachine.
+     * Test of inputMoney method, of class vendingMachine - null string test
      */
     @Test
-    public void testDeliveryReset() {
-        System.out.println("deliveryReset");
-        vendingMachine instance = new vendingMachine();
-        instance.deliveryReset();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInputMoney_nulstr() {
+        System.out.println("inputMoney - nulstr");
+        String aMoney = "";
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(aMoney);
+            assertEquals(10000, instance.getStorageAmount());
+
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of getBalance_str method, of class vendingMachine.
+     * Test of inputMoney method, of class vendingMachine - fake string test
      */
     @Test
-    public void testGetBalance_str() {
-        System.out.println("getBalance_str");
-        vendingMachine instance = new vendingMachine();
-        String expResult = "";
-        String result = instance.getBalance_str();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInputMoney_fakestr() {
+        System.out.println("inputMoney - fakestr");
+        String aMoney = "test";
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(aMoney);
+            assertEquals(10000, instance.getStorageAmount());
+
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of setMessage method, of class vendingMachine.
+     * Test of inputMoney method, of class vendingMachine - regular string
+     * test
      */
     @Test
-    public void testSetMessage() {
-        System.out.println("setMessage");
-        String aMessage = "";
-        vendingMachine instance = new vendingMachine();
-        instance.setMessage(aMessage);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInputMoney_regstr() {
+        System.out.println("inputMoney - regstr");
+        String aMoney = "1000";
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(aMoney);
+            assertEquals(11000, instance.getStorageAmount());
+
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of getMessage method, of class vendingMachine.
+     * Test of outputMoney method, of class vendingMachine - positive test
      */
     @Test
-    public void testGetMessage() {
-        System.out.println("getMessage");
-        vendingMachine instance = new vendingMachine();
-        String expResult = "";
-        String result = instance.getMessage();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testOutputMoney_pos() {
+        System.out.println("outputMoney - positive");
+        int tmp_money = 100;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(tmp_money);
+            instance.outputMoney();
+            int expResultStorage = 10000;
+            int resultStorage = instance.getStorageAmount();
+            assertEquals(expResultStorage, resultStorage);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+    
+    /**
+     * Test of outputMoney method, of class vendingMachine - null test
+     */
+    @Test
+    public void testOutputMoney_nul() {
+        System.out.println("outputMoney - null");
+        int tmp_money = 0;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(tmp_money);
+            instance.outputMoney();
+            int expResultStorage = 10000;
+            int resultStorage = instance.getStorageAmount();
+            assertEquals(expResultStorage, resultStorage);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+    
+    /**
+     * Test of outputMoney method, of class vendingMachine - negative test
+     */
+    @Test
+    public void testOutputMoney_neg() {
+        System.out.println("outputMoney - negative");
+        int tmp_money = -100;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(tmp_money);
+            instance.outputMoney();
+            int expResultStorage = 10000;
+            int resultStorage = instance.getStorageAmount();
+            assertEquals(expResultStorage, resultStorage);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+    
+    /**
+     * Test of outputMoney method, of class vendingMachine - overflow test
+     */
+    @Test
+    public void testOutputMoney_ovf() {
+        System.out.println("outputMoney - overflow");
+        int tmp_money = 15000;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(tmp_money);
+            instance.outputMoney();
+            int expResultStorage = 10000;
+            int resultStorage = instance.getStorageAmount();
+            assertEquals(expResultStorage, resultStorage);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of getProductInfo method, of class vendingMachine.
+     * Test of buyProduct method, of class vendingMachine - normal test
      */
     @Test
-    public void testGetProductInfo() {
-        System.out.println("getProductInfo");
+    public void testBuyProduct_normal() {
+        System.out.println("buyProduct - normal");
         int productNumber = 0;
-        vendingMachine instance = new vendingMachine();
-        instance.getProductInfo(productNumber);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int inpMoney = 100;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 50);
+            instance.reloadProduct(productNumber, 5);
+            instance.inputMoney(inpMoney);
+            boolean expResult = true;
+            boolean result = instance.buyProduct(productNumber);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of buyProduct method, of class vendingMachine.
+     * Test of buyProduct method, of class vendingMachine - product is sold
      */
     @Test
-    public void testBuyProduct() {
-        System.out.println("buyProduct");
+    public void testBuyProduct_sold() {
+        System.out.println("buyProduct - sold");
         int productNumber = 0;
-        vendingMachine instance = new vendingMachine();
-        boolean expResult = false;
-        boolean result = instance.buyProduct(productNumber);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int inpMoney = 100;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 50);
+            instance.inputMoney(inpMoney);
+            boolean expResult = false;
+            boolean result = instance.buyProduct(productNumber);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of deleteProduct method, of class vendingMachine.
+     * Test of buyProduct method, of class vendingMachine - too expensive
      */
     @Test
-    public void testDeleteProduct() {
-        System.out.println("deleteProduct");
+    public void testBuyProduct_notenough() {
+        System.out.println("buyProduct - not enough");
         int productNumber = 0;
-        vendingMachine instance = new vendingMachine();
-        instance.deleteProduct(productNumber);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int inpMoney = 100;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 200);
+            instance.inputMoney(inpMoney);
+            boolean expResult = false;
+            boolean result = instance.buyProduct(productNumber);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of changeProduct method, of class vendingMachine.
+     * Test of buyProduct method, of class vendingMachine - product is null
      */
     @Test
-    public void testChangeProduct() {
-        System.out.println("changeProduct");
+    public void testBuyProduct_null() {
+        System.out.println("buyProduct - null");
+        int productNumber = 0;
+        int inpMoney = 100;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.inputMoney(inpMoney);
+            boolean expResult = false;
+            boolean result = instance.buyProduct(productNumber);
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of deleteProduct method, of class vendingMachine - exist
+     */
+    @Test
+    public void testDeleteProduct_exist() {
+        System.out.println("deleteProduct - exist");
+        int productNumber = 0;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 50);
+            instance.deleteProduct(productNumber);
+            if (instance.PStorage.products.capacity() != 0) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of deleteProduct method, of class vendingMachine - not exist
+     */
+    @Test
+    public void testDeleteProduct_notexist() {
+        System.out.println("deleteProduct - not exist");
+        int productNumber = 0;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.deleteProduct(productNumber);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of changeProduct method, of class vendingMachine - normal test
+     */
+    @Test
+    public void testChangeProduct_normal() {
+        System.out.println("changeProduct - normal");
+        int productNumber = 0;
+        String _name = "newtest";
+        int _cost = 80;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 50);
+            instance.changeProduct(productNumber, _name, _cost);
+            product test = instance.PStorage.products.elementAt(productNumber);
+            if (test.getCost() != 80 || !test.getName().equals("newtest")) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of changeProduct method, of class vendingMachine - null cost
+     */
+    @Test
+    public void testChangeProduct_nullcost() {
+        System.out.println("changeProduct - nullcost");
+        int productNumber = 0;
+        String _name = "newtest";
+        int _cost = 0;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 50);
+            instance.changeProduct(productNumber, _name, _cost);
+            product test = instance.PStorage.products.elementAt(productNumber);
+            if (test.getCost() != 50 || !test.getName().equals("newtest")) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of changeProduct method, of class vendingMachine - negatve cost
+     */
+    @Test
+    public void testChangeProduct_negcost() {
+        System.out.println("changeProduct - nullcost");
+        int productNumber = 0;
+        String _name = "newtest";
+        int _cost = -40;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 50);
+            instance.changeProduct(productNumber, _name, _cost);
+            product test = instance.PStorage.products.elementAt(productNumber);
+            if (test.getCost() != 50 || !test.getName().equals("newtest")) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of changeProduct method, of class vendingMachine - null string
+     */
+    @Test
+    public void testChangeProduct_nullstr() {
+        System.out.println("changeProduct - nullcost");
         int productNumber = 0;
         String _name = "";
-        int _cost = 0;
-        vendingMachine instance = new vendingMachine();
-        instance.changeProduct(productNumber, _name, _cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int _cost = 80;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.addProduct("test", 50);
+            instance.changeProduct(productNumber, _name, _cost);
+            product test = instance.PStorage.products.elementAt(productNumber);
+            if (test.getCost() != 50 || !test.getName().equals("test")) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
     }
 
     /**
-     * Test of addProduct method, of class vendingMachine.
+     * Test of changeProduct method, of class vendingMachine - not exist
      */
     @Test
-    public void testAddProduct() {
-        System.out.println("addProduct");
+    public void testChangeProduct_notexist() {
+        System.out.println("changeProduct - not exist");
+        int productNumber = 0;
+        String _name = "newtest";
+        int _cost = 0;
+
+        try {
+            vendingMachine instance = new vendingMachine();
+            instance.changeProduct(productNumber, _name, _cost);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of addProduct method, of class vendingMachine - normal input
+     */
+    @Test
+    public void testAddProduct_pos() {
+        System.out.println("addProduct - pos");
         String _name = "test";
         int _cost = 30;
         vendingMachine instance = new vendingMachine();
         try {
             instance.addProduct(_name, _cost);
-            
+            if (instance.PStorage.products.capacity() != 1) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of addProduct method, of class vendingMachine - null test
+     */
+    @Test
+    public void testAddProduct_nul() {
+        System.out.println("addProduct - nul");
+        String _name = "test";
+        int _cost = 0;
+        vendingMachine instance = new vendingMachine();
+        try {
+            instance.addProduct(_name, _cost);
+            if (instance.PStorage.products.capacity() != 0) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of addProduct method, of class vendingMachine - negative test
+     */
+    @Test
+    public void testAddProduct_neg() {
+        System.out.println("addProduct - neg");
+        String _name = "test";
+        int _cost = -30;
+        vendingMachine instance = new vendingMachine();
+        try {
+            instance.addProduct(_name, _cost);
+            if (instance.PStorage.products.capacity() != 0) {
+                fail("Error!");
+            }
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+
+    /**
+     * Test of addProduct method, of class vendingMachine - null string test
+     */
+    @Test
+    public void testAddProduct_nulstr() {
+        System.out.println("addProduct - nulstr");
+        String _name = "";
+        int _cost = 50;
+        vendingMachine instance = new vendingMachine();
+        try {
+            instance.addProduct(_name, _cost);
+            if (instance.PStorage.products.capacity() != 0) {
+                fail("Error!");
+            }
         } catch (Exception a) {
             fail(a.getMessage());
         }
