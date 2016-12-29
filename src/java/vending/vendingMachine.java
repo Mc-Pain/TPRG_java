@@ -47,12 +47,16 @@ public class vendingMachine {
 
     public void outputMoney() { //получение сдачи
         if (tmpMoney > 0) { //в автомате есть деньги
-            delivery += tmpMoney;
-            if (MStorage.outputMoney(tmpMoney)) { //денег хватило на сдачу
-                setMessage(String.format("Заберите сдачу: %1$d рублей", delivery));
-                tmpMoney = 0;
+            if (Integer.MAX_VALUE - tmpMoney > delivery) {
+                delivery += tmpMoney;
+                if (MStorage.outputMoney(tmpMoney)) { //денег хватило на сдачу
+                    setMessage(String.format("Заберите сдачу: %1$d рублей", delivery));
+                    tmpMoney = 0;
+                } else {
+                    setMessage("Нет сдачи");
+                }
             } else {
-                setMessage("Нет сдачи");
+                setMessage("Ошибка переполнения сдачи");
             }
         } else if (tmpMoney == 0) {
             setMessage("Вы ничего не внесли");

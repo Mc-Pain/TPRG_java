@@ -299,8 +299,12 @@ public class vendingServlet extends HttpServlet {
 
         try {
             if (vending.equals("key_enable")) { //включаем режим управления
-                httpSession.setAttribute("key_pos", "enabled");
-                machine.setMessage("Режим управления включен");
+                if (machine.getBalance_str().equals("0")) {
+                    httpSession.setAttribute("key_pos", "enabled");
+                    machine.setMessage("Режим управления включен");
+                } else {
+                    machine.setMessage("Ошибка! Необходимо забрать деньги");
+                }
 
                 page_reload(request);
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
