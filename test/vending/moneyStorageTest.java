@@ -128,8 +128,8 @@ public class moneyStorageTest {
         test = new moneyStorage(startmoney);
 
         try {
-            test.outputMoney(aOutMoney);
-            assertEquals(10000, test.outputMoneySum());
+            boolean result = test.outputMoney(aOutMoney);
+            assertEquals(false, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -145,8 +145,8 @@ public class moneyStorageTest {
         test = new moneyStorage(startmoney);
 
         try {
-            test.outputMoney(aOutMoney);
-            assertEquals(10000, test.outputMoneySum());
+            boolean result = test.outputMoney(aOutMoney);
+            assertEquals(false, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -162,8 +162,8 @@ public class moneyStorageTest {
         test = new moneyStorage(startmoney);
 
         try {
-            test.outputMoney(aOutMoney);
-            assertEquals(9950, test.outputMoneySum());
+            boolean result = test.outputMoney(aOutMoney);
+            assertEquals(true, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -179,8 +179,8 @@ public class moneyStorageTest {
         test = new moneyStorage(startmoney);
 
         try {
-            test.outputMoney(aOutMoney);
-            assertEquals(10000, test.outputMoneySum());
+            boolean result = test.outputMoney(aOutMoney);
+            assertEquals(false, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -196,8 +196,8 @@ public class moneyStorageTest {
         test = new moneyStorage(startmoney);
 
         try {
-            test.outputMoney(aOutMoney);
-            assertEquals(10000, test.outputMoneySum());
+            boolean result = test.outputMoney(aOutMoney);
+            assertEquals(false, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -213,8 +213,8 @@ public class moneyStorageTest {
         test = new moneyStorage(startmoney);
 
         try {
-            test.outputMoney(aOutMoney);
-            assertEquals(10000, test.outputMoneySum());
+            boolean result = test.outputMoney(aOutMoney);
+            assertEquals(false, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }

@@ -335,10 +335,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.deleteProduct(productNumber);
-            if (instance.PStorage.products.capacity() != 0) {
-                fail("Error!");
-            }
+            boolean expResult = true;
+            boolean result = instance.deleteProduct(productNumber);
+            assertEquals (expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -354,7 +353,9 @@ public class vendingMachineTest {
 
         try {
             vendingMachine instance = new vendingMachine();
-            instance.deleteProduct(productNumber);
+            boolean expResult = false;
+            boolean result = instance.deleteProduct(productNumber);
+            assertEquals (expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -373,11 +374,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.changeProduct(productNumber, _name, _cost);
-            product test = instance.PStorage.products.elementAt(productNumber);
-            if (test.getCost() != 80 || !test.getName().equals("newtest")) {
-                fail("Error!");
-            }
+            boolean expResult = true;
+            boolean result = instance.changeProduct(productNumber, _name, _cost);
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -396,11 +395,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.changeProduct(productNumber, _name, _cost);
-            product test = instance.PStorage.products.elementAt(productNumber);
-            if (test.getCost() != 50 || !test.getName().equals("newtest")) {
-                fail("Error!");
-            }
+            boolean expResult = false;
+            boolean result = instance.changeProduct(productNumber, _name, _cost);
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -419,11 +416,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.changeProduct(productNumber, _name, _cost);
-            product test = instance.PStorage.products.elementAt(productNumber);
-            if (test.getCost() != 50 || !test.getName().equals("newtest")) {
-                fail("Error!");
-            }
+            boolean expResult = false;
+            boolean result = instance.changeProduct(productNumber, _name, _cost);
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -442,11 +437,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.changeProduct(productNumber, _name, _cost);
-            product test = instance.PStorage.products.elementAt(productNumber);
-            if (test.getCost() != 50 || !test.getName().equals("test")) {
-                fail("Error!");
-            }
+            boolean expResult = false;
+            boolean result = instance.changeProduct(productNumber, _name, _cost);
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -464,7 +457,9 @@ public class vendingMachineTest {
 
         try {
             vendingMachine instance = new vendingMachine();
-            instance.changeProduct(productNumber, _name, _cost);
+            boolean expResult = false;
+            boolean result = instance.changeProduct(productNumber, _name, _cost);
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -480,10 +475,9 @@ public class vendingMachineTest {
         int _cost = 30;
         vendingMachine instance = new vendingMachine();
         try {
-            instance.addProduct(_name, _cost);
-            if (instance.PStorage.products.capacity() != 1) {
-                fail("Error!");
-            }
+            boolean result = instance.addProduct(_name, _cost);
+            boolean expResult = true;
+            assertEquals (expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -499,10 +493,9 @@ public class vendingMachineTest {
         int _cost = 0;
         vendingMachine instance = new vendingMachine();
         try {
-            instance.addProduct(_name, _cost);
-            if (instance.PStorage.products.capacity() != 0) {
-                fail("Error!");
-            }
+            boolean result = instance.addProduct(_name, _cost);
+            boolean expResult = false;
+            assertEquals (expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -518,10 +511,9 @@ public class vendingMachineTest {
         int _cost = -30;
         vendingMachine instance = new vendingMachine();
         try {
-            instance.addProduct(_name, _cost);
-            if (instance.PStorage.products.capacity() != 0) {
-                fail("Error!");
-            }
+            boolean result = instance.addProduct(_name, _cost);
+            boolean expResult = false;
+            assertEquals (expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -537,10 +529,9 @@ public class vendingMachineTest {
         int _cost = 50;
         vendingMachine instance = new vendingMachine();
         try {
-            instance.addProduct(_name, _cost);
-            if (instance.PStorage.products.capacity() != 0) {
-                fail("Error!");
-            }
+            boolean result = instance.addProduct(_name, _cost);
+            boolean expResult = false;
+            assertEquals (expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -558,8 +549,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.reloadProduct(productNumber, count);
-            assertEquals(count, instance.PStorage.products.elementAt(productNumber).getLeft());
+            boolean result = instance.reloadProduct(productNumber, count);
+            boolean expResult = true;
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -577,8 +569,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.reloadProduct(productNumber, count);
-            assertEquals(0, instance.PStorage.products.elementAt(productNumber).getLeft());
+            boolean result = instance.reloadProduct(productNumber, count);
+            boolean expResult = false;
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -596,8 +589,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.reloadProduct(productNumber, count);
-            assertEquals(0, instance.PStorage.products.elementAt(productNumber).getLeft());
+            boolean result = instance.reloadProduct(productNumber, count);
+            boolean expResult = false;
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -615,8 +609,9 @@ public class vendingMachineTest {
         try {
             vendingMachine instance = new vendingMachine();
             instance.addProduct("test", 50);
-            instance.reloadProduct(productNumber, count);
-            assertEquals(0, instance.PStorage.products.elementAt(productNumber).getLeft());
+            boolean result = instance.reloadProduct(productNumber, count);
+            boolean expResult = false;
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }
@@ -633,7 +628,9 @@ public class vendingMachineTest {
 
         try {
             vendingMachine instance = new vendingMachine();
-            instance.reloadProduct(productNumber, count);
+            boolean result = instance.reloadProduct(productNumber, count);
+            boolean expResult = false;
+            assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
         }

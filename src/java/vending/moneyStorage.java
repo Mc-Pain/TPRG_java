@@ -13,18 +13,21 @@ public class moneyStorage {
     }
 
     public void addMoney(int aAddMoney) { //загрузка денег
-        if (aAddMoney > 0) {
+        if (aAddMoney > 0 && Integer.MAX_VALUE - aAddMoney > _money) {
             _money += aAddMoney;
         }
     }
 
-    public void outputMoney(int aOutMoney) { //выгрузка денег
+    public boolean outputMoney(int aOutMoney) { //выгрузка денег
         if (aOutMoney > 0) {
-            if (aOutMoney > _money) { //денег не хватило
-                _money = 0;
-            } else {
+            if (aOutMoney <= _money) { //денег достаточно
                 _money -= aOutMoney;
+                return true;
+            } else {
+                return false;
             }
+        } else {
+            return false; //отрицательная сумма
         }
     }
 

@@ -6,8 +6,13 @@ public class productStorage {
 
     public Vector<product> products = new Vector<product>();
 
-    public void delProduct(int productNumber) { //удалить продукт
-        products.removeElementAt(productNumber);
+    public boolean delProduct(int productNumber) { //удалить продукт
+        if (products.size() > productNumber) { //проверка на null
+            products.removeElementAt(productNumber);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void addProduct(String _name, int _cost, int _numLeft) { //добавить продукт
@@ -20,17 +25,30 @@ public class productStorage {
         products.add(place, newproduct);
     }
 
-    public void changeProduct(int productNumber, String _name, int _cost) {
-        delProduct(productNumber);
-        addProduct(_name, _cost, 0, productNumber);
+    public boolean changeProduct(int productNumber, String _name, int _cost) {
+        if (products.size() > productNumber && !_name.equals("") && _cost > 0) {
+            delProduct(productNumber);
+            addProduct(_name, _cost, 0, productNumber);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public int loadProduct(int productNumber, int amount) {
-        return products.elementAt(productNumber).reload(amount);
+    public boolean loadProduct(int productNumber, int amount) {
+        if (products.size() > productNumber) {
+            return products.elementAt(productNumber).reload(amount);
+        } else {
+            return false;
+        }
     }
 
-    public int decProduct(int productNumber) { //минус один продукт
-        return products.elementAt(productNumber).decrement();
+    public boolean decProduct(int productNumber) { //минус один продукт
+        if (products.size() > productNumber) {
+            return products.elementAt(productNumber).decrement();
+        } else {
+            return false;
+        }
     }
 
     public product outputProductSum() { //вывод информации обо всех продуктах

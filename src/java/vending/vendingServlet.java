@@ -245,7 +245,7 @@ public class vendingServlet extends HttpServlet {
             httpSession.setAttribute("error", e.getMessage());
         }
 
-        try { //вносим деньги напрямуж в хранилище
+        try { //вносим деньги напрямую в хранилище
             String key_pos = (String) request.getSession().getAttribute("key_pos");
             if (vending.equals("storage_input") && key_pos.equals("enabled")) {
                 machine.inputStorage((String) request.getParameter("storage_score"));

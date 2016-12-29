@@ -18,18 +18,21 @@ public class product {
         }
     }
 
-    public int reload(int number) { //приспичило догрузить продукт
-        if (number > 0) {
+    public boolean reload(int number) { //приспичило догрузить продукт
+        if (number > 0 && Integer.MAX_VALUE - number > _numLeft) {
             _numLeft += number;
+            return true;
+        } else {
+            return false;
         }
-        return _numLeft;
     }
 
-    public int decrement() { //продукт минус один
+    public boolean decrement() { //продукт минус один
         if (_numLeft > 0) {
             _numLeft--;
+            return true;
         }
-        return _numLeft;
+        return false;
     }
 
     public String getInfo() {

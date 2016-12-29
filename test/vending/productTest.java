@@ -96,8 +96,8 @@ public class productTest {
 
         try {
             product instance = new product("пыщь!", 50, 5);
-            int expResult = amount + 5;
-            int result = instance.reload(amount);
+            boolean expResult = true;
+            boolean result = instance.reload(amount);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -109,13 +109,13 @@ public class productTest {
      */
     @Test
     public void testReload_nul() {
-        System.out.println("reload - pos");
+        System.out.println("reload - nul");
         int amount = 0;
 
         try {
             product instance = new product("пыщь!", 50, 5);
-            int expResult = 5;
-            int result = instance.reload(amount);
+            boolean expResult = false;
+            boolean result = instance.reload(amount);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -132,8 +132,8 @@ public class productTest {
 
         try {
             product instance = new product("пыщь!", 50, 5);
-            int expResult = 5;
-            int result = instance.reload(amount);
+            boolean expResult = false;
+            boolean result = instance.reload(amount);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -150,8 +150,8 @@ public class productTest {
 
         try {
             product instance = new product("пыщь!", 50, 5);
-            int expResult = 5;
-            int result = instance.reload(amount);
+            boolean expResult = false;
+            boolean result = instance.reload(amount);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -159,16 +159,33 @@ public class productTest {
     }
 
     /**
-     * Test of decrement method, of class product.
+     * Test of decrement method, of class product - regular
      */
     @Test
-    public void testDecrement() {
-        System.out.println("decrement");
+    public void testDecrement_reg() {
+        System.out.println("decrement - reg");
 
         try {
             product instance = new product("пыщь!", 50, 5);
-            int expResult = 4;
-            int result = instance.decrement();
+            boolean expResult = true;
+            boolean result = instance.decrement();
+            assertEquals(expResult, result);
+        } catch (Exception a) {
+            fail(a.getMessage());
+        }
+    }
+    
+    /**
+     * Test of decrement method, of class product - null
+     */
+    @Test
+    public void testDecrement_nul() {
+        System.out.println("decrement - nul");
+
+        try {
+            product instance = new product("пыщь!", 50, 0);
+            boolean expResult = false;
+            boolean result = instance.decrement();
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());

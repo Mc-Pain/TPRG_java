@@ -26,7 +26,7 @@ public class vendingMachine {
     }
 
     public void inputMoney(int aMoney) { //пользователь вводит деньги в автомат
-        if (aMoney > 0) {
+        if (aMoney > 0 && Integer.MAX_VALUE - aMoney > tmpMoney) {
             tmpMoney += aMoney;
             MStorage.addMoney(aMoney);
             setMessage(String.format("Вы внесли %1$d рублей.", aMoney));
@@ -38,11 +38,14 @@ public class vendingMachine {
     }
 
     public void outputMoney() { //получение сдачи
-        if (tmpMoney > 0) {
+        if (tmpMoney > 0) { //в автомате есть деньги
             delivery += tmpMoney;
-            MStorage.outputMoney(tmpMoney);
-            setMessage(String.format("Заберите сдачу: %1$d рублей", delivery));
-            tmpMoney = 0;
+            if (MStorage.outputMoney(tmpMoney)) { //денег хватило на сдачу
+                setMessage(String.format("Заберите сдачу: %1$d рублей", delivery));
+                tmpMoney = 0;
+            } else {
+                setMessage("Нет сдачи");
+            }
         } else if (tmpMoney == 0) {
             setMessage("Вы ничего не внесли");
         } else {
@@ -80,36 +83,59 @@ public class vendingMachine {
     }
 
     public boolean buyProduct(int productNumber) { //покупка продукта
-        int cost = this.PStorage.products.elementAt(productNumber).getCost();
-        if (this.tmpMoney < cost) {
-            this.setMessage(String.format("Недостаточно денег.<br/>Стоимость товара: %1$d", cost));
-            return false;
+        if (this.PStorage.products.size() > productNumber) {
+            int cost = this.PStorage.products.elementAt(productNumber).getCost();
+            if (this.PStorage.products.elementAt(productNumber).getLeft() > 0) { //проверка на распроданность
+                if (this.tmpMoney < cost) { //хватает ли денег?
+                    this.setMessage(String.format("Недостаточно денег.<br/>Стоимость товара: %1$d", cost));
+                    return false;
+                } else { //да, хватает
+                    PStorage.decProduct(productNumber);
+                    this.tmpMoney -= cost;
+                    this.setMessage(String.format("Куплен товар под номером %1$d<br/>Осталось %2$s шт.", productNumber, this.PStorage.products.elementAt(productNumber).getLeft()));
+                    return true;
+                }
+            } else {
+                this.setMessage(String.format("Товар под номером %1$d распродан.", productNumber));
+                return false;
+            }
         } else {
-            PStorage.decProduct(productNumber);
-            this.tmpMoney -= cost;
-            this.setMessage(String.format("Куплен товар под номером %1$d<br/>Осталось %2$s шт.", productNumber, this.PStorage.products.elementAt(productNumber).getLeft()));
-            return true;
+            this.setMessage(String.format("Выбранного товара не существует"));
+            return false;
         }
     }
 
-    public void deleteProduct(int productNumber) {
-        this.setMessage(String.format("Продукт %1$s удален", PStorage.products.elementAt(productNumber).getName()));
-        PStorage.delProduct(productNumber);
+    public boolean deleteProduct(int productNumber) {
+        if (PStorage.delProduct(productNumber)) {
+            this.setMessage(String.format("Продукт %1$s удален", productNumber));
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void changeProduct(int productNumber, String _name, int _cost) {
+    public boolean changeProduct(int productNumber, String _name, int _cost) {
         this.setMessage("Продукт заменён");
-        PStorage.changeProduct(productNumber, _name, _cost);
+        return PStorage.changeProduct(productNumber, _name, _cost);
     }
 
-    public void addProduct(String _name, int _cost) { //добавить продукт
-        this.setMessage("Продукт добавлен");
-        PStorage.addProduct(_name, _cost, 0);
+    public boolean addProduct(String _name, int _cost) { //добавить продукт
+        if (_cost > 0 && !_name.equals("")) {
+            this.setMessage("Продукт добавлен");
+            PStorage.addProduct(_name, _cost, 0);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void reloadProduct(int productNumber, int count) { //дозагрузка продукта
-        PStorage.loadProduct(productNumber, count);
-        this.setMessage(String.format("Продукт %1$d загружен<br>Количество: %2$d шт.", productNumber, PStorage.products.elementAt(productNumber).getLeft()));
+    public boolean reloadProduct(int productNumber, int count) { //дозагрузка продукта
+        if (PStorage.loadProduct(productNumber, count)) {
+            this.setMessage(String.format("Продукт %1$d загружен<br>Количество: %2$d шт.", productNumber, PStorage.products.elementAt(productNumber).getLeft()));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getStorageAmount() { //получение кол-ва денег в хранилище
@@ -127,7 +153,7 @@ public class vendingMachine {
     }
 
     public void inputStorage(int aMoney) { //оператор загружает деньги в хранилище
-        if (aMoney > 0) {
+        if (aMoney > 0 && Integer.MAX_VALUE - aMoney > tmpMoney) {
             MStorage.addMoney(aMoney);
             setMessage(String.format("Вы загрузили %1$d рублей.", aMoney));
         } else if (aMoney == 0) {

@@ -44,8 +44,7 @@ public class productStorageTest {
         try {
             productStorage instance = new productStorage();
             instance.addProduct(startname, startcost, startnum);
-            instance.delProduct(0);
-            if (!(instance.products.elementAt(0) == null)){
+            if (!instance.delProduct(0)){
                 fail("Error!");
             }
         } catch (Exception a) {
@@ -135,8 +134,8 @@ public class productStorageTest {
         try {
             productStorage instance = new productStorage();
             instance.addProduct(startname, startcost, start);
-            int expResult = amount + startnum;
-            int result = instance.loadProduct(productNumber, amount);
+            boolean expResult = true;
+            boolean result = instance.loadProduct(productNumber, amount);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -155,8 +154,8 @@ public class productStorageTest {
         try {
             productStorage instance = new productStorage();
             instance.addProduct(startname, startcost, start);
-            int expResult = startnum;
-            int result = instance.loadProduct(productNumber, amount);
+            boolean expResult = false;
+            boolean result = instance.loadProduct(productNumber, amount);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -175,8 +174,8 @@ public class productStorageTest {
         try {
             productStorage instance = new productStorage();
             instance.addProduct(startname, startcost, start);
-            int expResult = startnum;
-            int result = instance.loadProduct(productNumber, amount);
+            boolean expResult = false;
+            boolean result = instance.loadProduct(productNumber, amount);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -194,8 +193,8 @@ public class productStorageTest {
         try {
             productStorage instance = new productStorage();
             instance.addProduct(startname, startcost, num);
-            int expResult = num - 1;
-            int result = instance.decProduct(productNumber);
+            boolean expResult = true;
+            boolean result = instance.decProduct(productNumber);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
@@ -213,8 +212,8 @@ public class productStorageTest {
         try {
             productStorage instance = new productStorage();
             instance.addProduct(startname, startcost, num);
-            int expResult = 0;
-            int result = instance.decProduct(productNumber);
+            boolean expResult = false;
+            boolean result = instance.decProduct(productNumber);
             assertEquals(expResult, result);
         } catch (Exception a) {
             fail(a.getMessage());
